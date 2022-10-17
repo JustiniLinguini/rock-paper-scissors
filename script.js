@@ -5,7 +5,6 @@ let score = 0;
 let gameState;
 
 /* selects random number*/
-
 function randomNumberSelector(max) {
     return Math.floor(Math.random() * max) + 1;
 }
@@ -51,7 +50,7 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-function game() {
+/* function game() {
     for(let i = 1; i <= 5; i++){
         let playerSelection = "Rock";
         let computerSelection = getComputerChoice();
@@ -80,5 +79,46 @@ function game() {
 
     }
 }
+*/
 
+let playerSelection = "TBD";
+    
+function getPlayerSelection(){
+    const rock = document.querySelector('#rock');
+    const paper = document.querySelector('#paper');
+    const scissors = document.querySelector('#scissors');
+
+    rock.addEventListener('click', ()=> {
+        playerSelection = "Rock";
+        console.log(playerSelection);
+    });
+    scissors.addEventListener('click', ()=> {
+        playerSelection = "Scissors";
+    });
+    paper.addEventListener('click', ()=> {
+        playerSelection = "Paper";
+    });
+}
+
+function game(){
+
+    getPlayerSelection();
+
+    if(playerSelection != "TBD"){
+        console.log(playerSelection)
+        let computerSelection = getComputerChoice();
+
+        playRound(playerSelection, computerSelection);
+        
+        if(gameState == 3){
+            console.log(`It's a draw! You have played ${i} times!`);
+            score = score + 0.5;
+        } else if(gameState == 2){
+            console.log(`Sorry Pal. You have played ${i} times!`);
+        } else if(gameState == 1){
+            console.log(`You Won! You have played ${i} times!`);
+            score = score + 1;
+        }
+    }
+}
 game();
