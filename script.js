@@ -1,6 +1,6 @@
 
 let score = 0;
-let rounds = 0;
+let rounds = 1;
 
 /* selects random number*/
 function randomNumberSelector(max) {
@@ -103,7 +103,7 @@ function checkGameState(){
     const buttons = document.querySelectorAll('button')
     let gameOver = false;
 
-    if(rounds == 5){
+    if(rounds == 6){
         if(score > 2.5){
             screen.textContent = `You won the game, nice job pal! Your score was ${score}`;
             gameOver = true;
@@ -120,17 +120,9 @@ function checkGameState(){
     }
 
     if(gameOver == true){
-        rock.removeEventListener('click', ()=> {
-            playRound("Rock", getComputerChoice())
-            checkGameState();
-        });
-        scissors.removeEventListener('click', ()=> {
-            playRound("Scissors", getComputerChoice())
-            checkGameState();
-        });
-        paper.removeEventListener('click', ()=> {
-            playRound("Paper", getComputerChoice())
-        });
+        rock.remove();
+        scissors.remove();
+        paper.remove();
     }
 }
 
