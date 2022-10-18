@@ -2,7 +2,7 @@
     font-family: 'Roboto', sans-serif;
 }
 body{
-    background-image: linear-gradient(to right, #ffb4a2, #e5989b);
+    background-image: linear-gradient(to right, #FFD6FF, #C8B6FF);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,24 +18,27 @@ body{
     text-align: center;
     width: 500px;
     height: 500px;
-    background-color: azure;
-    border-radius: 25px;
+    background-image: linear-gradient(to right, #C8B6FF, #FFD6FF);
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: black;
 }
 button {
-    backgroundColor: white;
+    background-color: #FFD6FF;
     border: 2px solid;
-    border-color: #6D6875;
-    border-radius:25px;
+    border-color: black;
+    border-radius:10px;
     width: 125px;
     height: 50px;
     font-weight:550;
 }
 button:hover{
-    border-color: #FFCDB2;
+    border-color: #BBD0FF;
     transform: scale(1.1);
 }
 #button-container{
     display: flex;
     margin-top: 24px;
-    gap: 12px;
+    justify-content: space-between;
+    width: 500px;
 }

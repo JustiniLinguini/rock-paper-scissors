@@ -1,8 +1,6 @@
 
 let score = 0;
-
-/*gameState rules: win state = 1,loss state = 2, draw state = 3 */
-let gameState;
+let rounds = 0;
 
 /* selects random number*/
 function randomNumberSelector(max) {
@@ -27,98 +25,113 @@ function getComputerChoice(){
 
 function playRound(playerSelection, computerSelection){
 
+    const screen = document.querySelector('#screen');
+
+    /* draw */
     if(playerSelection === computerSelection){
-        gameState = 3;
+        screen.textContent = `It's a draw bucko! Rounds: ${rounds}`;
+        console.log(playerSelection, "player selection")
+        console.log(computerSelection, "computer selection")
+        score = score + 0.5;
+        rounds = rounds + 1;
     }
     else if(playerSelection === "Rock" && computerSelection === "Scissors"){
-        gameState = 1;
+        score = score + 1; /*win*/
+        screen.textContent = `You won! Rounds: ${rounds}`
+        console.log(playerSelection, "player selection")
+        console.log(computerSelection, "computer selection")
+        rounds = rounds + 1;
     }
     else if(playerSelection === "Rock" && computerSelection === "Paper"){
-        gameState = 2;
+        /*loss*/
+        screen.textContent = `You lost :( Rounds: ${rounds}`;
+        console.log(playerSelection, "player selection")
+        console.log(computerSelection, "computer selection")
+        rounds = rounds + 1;
     }
     else if(playerSelection === "Scissors" && computerSelection === "Paper"){
-        gameState = 1;
+        score = score + 1; /*win*/
+        screen.textContent = `You won! Rounds: ${rounds}`
+        console.log(playerSelection, "player selection")
+        console.log(computerSelection, "computer selection")
+        rounds = rounds + 1;
     }
     else if(playerSelection === "Scissors" && computerSelection === "Rock"){
-        gameState = 2;
+        /*loss*/
+        screen.textContent = `You lost :( Rounds: ${rounds}`;
+        console.log(playerSelection, "player selection")
+        console.log(computerSelection, "computer selection")
+        rounds = rounds + 1;
     }
     else if(playerSelection === "Paper" && computerSelection === "Rock"){
-        gameState = 1;
+        score = score + 1; /*win*/
+        screen.textContent = `You won! Rounds: ${rounds}`
+        console.log(playerSelection, "player selection")
+        console.log(computerSelection, "computer selection")
+        rounds = rounds + 1;
     }
     else if(playerSelection === "Paper" && computerSelection === "Scissors"){
-        gameState = 2;
+        /*loss*/
+        screen.textContent = `You lost :( Rounds: ${rounds}`;
+        console.log(playerSelection, "player selection")
+        console.log(computerSelection, "computer selection")
+        rounds = rounds + 1;
     }
 }
-
-/* function game() {
-    for(let i = 1; i <= 5; i++){
-        let playerSelection = "Rock";
-        let computerSelection = getComputerChoice();
-
-        playRound(playerSelection, computerSelection);
-
-        if(gameState == 3){
-            console.log(`It's a draw! You have played ${i} times!`);
-            score = score + 0.5;
-        } else if(gameState == 2){
-            console.log(`Sorry Pal. You have played ${i} times!`);
-        } else if(gameState == 1){
-            console.log(`You Won! You have played ${i} times!`);
-            score = score + 1;
-        }
-
-        if(i == 5) {
-            if(score > 2.5){
-                alert(`You won! Thanks for playing. Your score was: ${score}`);
-            } else if(score == 2.5){
-                alert(`It's a draw. Thanks for playing. Your score was: ${score}`)
-            } else{
-                alert(`Sorry pal, you lost. Thanks for playing. Your score was: ${score}`);
-            }
-        }
-
-    }
-}
-*/
-
-let playerSelection = "TBD";
     
-function getPlayerSelection(){
+function setHandlers(){
     const rock = document.querySelector('#rock');
     const paper = document.querySelector('#paper');
     const scissors = document.querySelector('#scissors');
 
     rock.addEventListener('click', ()=> {
-        playerSelection = "Rock";
-        console.log(playerSelection);
+        playRound("Rock", getComputerChoice())
+        checkGameState();
     });
     scissors.addEventListener('click', ()=> {
-        playerSelection = "Scissors";
+        playRound("Scissors", getComputerChoice())
+        checkGameState();
     });
     paper.addEventListener('click', ()=> {
-        playerSelection = "Paper";
+        playRound("Paper", getComputerChoice())
+        checkGameState();
     });
 }
 
-function game(){
+function checkGameState(){
+    const screen = document.querySelector('#screen');
+    const buttons = document.querySelectorAll('button')
+    let gameOver = false;
 
-    getPlayerSelection();
-
-    if(playerSelection != "TBD"){
-        console.log(playerSelection)
-        let computerSelection = getComputerChoice();
-
-        playRound(playerSelection, computerSelection);
-        
-        if(gameState == 3){
-            console.log(`It's a draw! You have played ${i} times!`);
-            score = score + 0.5;
-        } else if(gameState == 2){
-            console.log(`Sorry Pal. You have played ${i} times!`);
-        } else if(gameState == 1){
-            console.log(`You Won! You have played ${i} times!`);
-            score = score + 1;
+    if(rounds == 5){
+        if(score > 2.5){
+            screen.textContent = `You won the game, nice job pal! Your score was ${score}`;
+            gameOver = true;
+            console.log(gameOver);
+        } else if(score < 2.5){
+            screen.textContent = `You lost the game, bad job pal! Your score was ${score}`;
+            gameOver = true;
+            console.log(gameOver);
+        } else if(score == 2.5){
+            screen.textContent = `It's a draw! At least ya didn't lose right? Your score was ${score}`;
+            gameOver = true;
+            console.log(gameOver);
         }
     }
+
+    if(gameOver == true){
+        rock.removeEventListener('click', ()=> {
+            playRound("Rock", getComputerChoice())
+            checkGameState();
+        });
+        scissors.removeEventListener('click', ()=> {
+            playRound("Scissors", getComputerChoice())
+            checkGameState();
+        });
+        paper.removeEventListener('click', ()=> {
+            playRound("Paper", getComputerChoice())
+        });
+    }
 }
-game();
+
+setHandlers();
